@@ -1,76 +1,127 @@
+/* ===== Design System (unchanged tokens, expanded palette) ===== */
 :root{
-  --bg:#0f172a; --panel:#111827; --text:#e5e7eb; --muted:#9ca3af;
-  --brand:#6366f1; --brand-600:#4f46e5; --accent:#22d3ee; --ring:rgba(99,102,241,.35);
+  --bg:#0b0f1a; --bg-2:#0d1222; --bg-3:#0a0f1d;
+  --text:#e6e9ef; --muted:#a5adbb;
+  --brand:#7c8cff; --brand-600:#5f6efb; --brand-700:#4e5cf2;
+  --accent:#22d3ee; --ring:rgba(124,140,255,.45);
+  --glass: rgba(255,255,255,.05); --glass-2: rgba(255,255,255,.07);
+  --stroke: rgba(148,163,184,.14); --shadow: 0 20px 60px rgba(2,6,23,.5);
 }
 
-/* Reset & base */
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  margin:0;
-  background:linear-gradient(180deg, var(--bg), #0b1020 60%, #080d1a);
-  color:var(--text);
+  margin:0; color:var(--text);
   font-family: Roboto, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
+  line-height:1.65; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+
+  /* Layered background: gradient + conic highlight + grid + grain */
+  background:
+    radial-gradient(1200px 600px at 20% -10%, rgba(124,140,255,.18), transparent 60%),
+    conic-gradient(from 200deg at 80% 10%, rgba(34,211,238,.12), transparent 35%),
+    linear-gradient(180deg, var(--bg), var(--bg-2) 40%, var(--bg-3) 100%);
+  position:relative;
+}
+body:before{
+  content:"";
+  position:fixed; inset:0; pointer-events:none; z-index:-1;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size: 24px 24px; opacity:.25; mix-blend-mode:overlay;
+}
+body:after{
+  /* soft film grain */
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 180px 180px; opacity:.9; mix-blend-mode:soft-light;
 }
 
-/* Typography (avoid defaults) */
-h1,h2,h3,h4,h5,h6{margin:0 0 .5rem; font-weight:700; line-height:1.2; letter-spacing:.2px}
-p{margin:0 0 1rem; font-size:1.05rem}
+/* ===== Typography (refined scale) ===== */
+h1,h2,h3,h4,h5,h6{margin:0 0 .6rem; font-weight:700; line-height:1.2; letter-spacing:.2px}
+.name{font-size:clamp(2rem, 1.1rem + 3vw, 3rem)}
+h2{font-size:clamp(1.25rem, .9rem + 1.4vw, 1.6rem)}
+h3{font-size:clamp(1.05rem, .85rem + .9vw, 1.25rem)}
+p{margin:0 0 1rem; font-size:1.05rem; color:var(--text)}
 a{color:var(--accent); text-decoration:none; border-bottom:1px solid transparent}
 a:hover{border-color:var(--accent)}
 ul{margin:.25rem 0 1rem; padding-left:1.2rem}
-li{margin:.35rem 0}
+li{margin:.4rem 0}
 
-/* Layout */
-.container{width:min(100%,1050px); padding:0 1.25rem; margin-inline:auto}
-.section{padding:2.5rem 0}
+/* ===== Layout ===== */
+.container{width:min(100%,1100px); padding:0 1.25rem; margin-inline:auto}
+.section{padding:2.75rem 0}
+
+/* Header with glass panel */
 .site-header{
-  background:radial-gradient(800px 400px at 20% -10%, rgba(99,102,241,.25), transparent),
-             linear-gradient(180deg, rgba(99,102,241,.08), transparent 40%);
-  border-bottom:1px solid rgba(148,163,184,.12);
+  position:relative; overflow:hidden;
+  border-bottom:1px solid var(--stroke);
+  background:linear-gradient(180deg, rgba(124,140,255,.10), transparent 55%);
 }
 .header-grid{
-  display:grid; grid-template-columns:96px 1fr; gap:1.25rem; align-items:center; padding:2.25rem 0 2rem;
+  display:grid; grid-template-columns:110px 1fr; gap:1.5rem; align-items:center; padding:2.5rem 0 2.25rem;
 }
 .avatar{
-  width:96px; height:96px; border-radius:50%; object-fit:cover; display:block;
-  border:2px solid rgba(255,255,255,.15); box-shadow:0 6px 24px rgba(0,0,0,.35)
+  width:110px; height:110px; border-radius:50%; object-fit:cover; display:block;
+  border:2px solid rgba(255,255,255,.22);
+  box-shadow: 0 10px 35px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.08);
 }
-.name{font-size:clamp(1.6rem, 2.5vw + 1rem, 2.25rem)}
-.tagline{color:var(--muted); margin:.25rem 0 1rem}
+.tagline{color:var(--muted); margin:.35rem 0 1.1rem}
 
-/* Contact */
-.contact-list{list-style:none; padding:0; margin:0; display:flex; gap:1rem; flex-wrap:wrap}
-.contact-list a{
-  display:inline-block; padding:.5rem .8rem; background:rgba(99,102,241,.08); color:var(--text);
-  border-radius:.6rem; border:1px solid rgba(99,102,241,.25)
+/* Contact chips */
+.contact-list{list-style:none; padding:0; margin:0; display:flex; gap:.75rem; flex-wrap:wrap; align-items:center}
+.contact-list a, .contact-list .phone{
+  display:inline-flex; align-items:center; gap:.5rem;
+  padding:.55rem .85rem;
+  background:linear-gradient(180deg, var(--glass), rgba(255,255,255,.03));
+  border:1px solid var(--stroke);
+  border-radius:.7rem; color:var(--text);
+  box-shadow: 0 6px 18px rgba(2,6,23,.35);
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
 }
-.contact-list a:hover{background:rgba(99,102,241,.15); transform:translateY(-1px)}
+.contact-list a:hover{
+  transform:translateY(-2px);
+  border-color: rgba(124,140,255,.45);
+  background:linear-gradient(180deg, var(--glass-2), rgba(255,255,255,.04));
+}
 
-/* Cards & Pills */
+/* Cards */
 .card{
-  background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
-  border:1px solid rgba(148,163,184,.12); border-radius:1rem; padding:1.25rem; box-shadow:0 10px 30px rgba(2,6,23,.45);
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border:1px solid var(--stroke);
+  border-radius:1rem; padding:1.25rem 1.25rem 1.1rem;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
 }
-.pill-list{list-style:none; padding:0; margin:0; display:flex; gap:.6rem; flex-wrap:wrap}
+.card + .card{margin-top:1rem}
+
+/* Pills */
+.pill-list{list-style:none; padding:0; margin:0; display:flex; gap:.6rem .6rem; flex-wrap:wrap}
 .pill-list li{
-  background:rgba(99,102,241,.1); border:1px solid rgba(99,102,241,.28); color:var(--text);
-  padding:.5rem .75rem; border-radius:999px; font-size:.95rem
+  padding:.5rem .75rem; border-radius:999px; font-size:.95rem;
+  background:linear-gradient(180deg, rgba(124,140,255,.14), rgba(124,140,255,.08));
+  border:1px solid rgba(124,140,255,.35); color:var(--text);
+  transition: transform .15s ease, box-shadow .15s ease;
+  box-shadow: 0 6px 16px rgba(2,6,23,.35), inset 0 0 0 1px rgba(255,255,255,.05);
+}
+.pill-list li:hover{ transform:translateY(-1px); box-shadow: 0 10px 22px rgba(2,6,23,.45)}
+
+/* Section dividers */
+.section:not(:first-of-type){ position:relative }
+.section:not(:first-of-type):before{
+  content:""; position:absolute; inset:0 0 auto; height:1px; top:0;
+  background:linear-gradient(90deg, transparent, rgba(148,163,184,.18), transparent);
 }
 
 /* Buttons */
-.btn{display:inline-block; padding:.6rem .95rem; background:var(--brand); color:white; border-radius:.55rem; border:1px solid var(--brand-600)}
-.btn:hover{background:var(--brand-600)}
+.btn{display:inline-block; padding:.65rem 1rem; background:linear-gradient(180deg, var(--brand), var(--brand-700));
+  color:white; border-radius:.6rem; border:1px solid var(--brand-600); box-shadow: 0 12px 32px rgba(95,110,251,.35)}
+.btn:hover{filter:saturate(1.1)}
 
 /* Footer */
 .site-footer{
-  border-top:1px solid rgba(148,163,184,.12);
-  padding:1.5rem 0 2.25rem;
-  color:var(--muted);
-  background:linear-gradient(180deg, transparent, rgba(2,6,23,.55))
+  border-top:1px solid var(--stroke);
+  padding:1.6rem 0 2.4rem; color:var(--muted);
+  background:linear-gradient(180deg, transparent, rgba(2,6,23,.55));
 }
 
 /* Accessibility */
@@ -82,10 +133,10 @@ li{margin:.35rem 0}
 
 /* Responsive */
 @media (min-width:768px){
-  .section{padding:3rem 0}
-  .card{padding:1.5rem}
+  .section{padding:3.2rem 0}
+  .card{padding:1.4rem 1.4rem 1.2rem}
 }
 @media (min-width:1024px){
-  .header-grid{grid-template-columns:120px 1fr; gap:1.5rem; padding:3rem 0 2.5rem}
-  .avatar{width:120px; height:120px}
+  .header-grid{grid-template-columns:130px 1fr; gap:1.75rem; padding:3.1rem 0 2.6rem}
+  .avatar{width:130px; height:130px}
 }

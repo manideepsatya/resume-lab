@@ -1,2 +1,3 @@
 # resume-lab
 In this assignment, you will design and build a personal resume webpage using only HTML and CSS (no JavaScript)
+This repository contains a personal resume website, built with semantic HTML and modern CSS only, and deployed via GitHub Pages for public access per the ITMD 541 Lab 1 requirements. The site presents a polished, mobile‑friendly profile with a professional headshot, accessible alt text, and clearly organized sections for Summary, Experience, Projects, Skills, Certifications, and Education to match the assignment rubric. Styling employs a responsive, CSS‑only layout with a Google Web Font, custom components (cards, chips, buttons), and non‑default typography/color/spacing to ensure readable design across devices.
